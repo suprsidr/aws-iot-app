@@ -51,7 +51,7 @@ class App extends Component {
         secretKey,
         sessionToken
       ) => {
-        client = awsIot.device({
+        client = new awsIot.device({
           region,
           protocol: 'wss',
           accessKeyId: accessKey,
