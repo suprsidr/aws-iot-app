@@ -8,11 +8,8 @@ exports.handler = (event, context, callback) => {
     if (err) return callback(err);
 
     const iotEndpoint = data.endpointAddress;
-    const region = getRegion(iotEndpoint);
 
-    const clientId = `iot-button-lambda-${Math.floor(
-      Math.random() * Number.MAX_SAFE_INTEGER
-    ).toString()}`;
+    const clientId = 'iot-button-lambda';
     const iotTopic = '/myIotButton/clickType';
 
     const iotdata = new AWS.IotData({
@@ -35,10 +32,4 @@ exports.handler = (event, context, callback) => {
       }
     });
   });
-};
-
-const getRegion = iotEndpoint => {
-  const partial = iotEndpoint.replace('.amazonaws.com', '');
-  const iotIndex = iotEndpoint.indexOf('iot');
-  return partial.substring(iotIndex + 4);
 };

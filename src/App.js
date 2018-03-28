@@ -114,6 +114,7 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <p>{this.state.clickType}</p>
+        <p>{this.state.clientId}</p>
       </div>
     );
   }
