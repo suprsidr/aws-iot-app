@@ -31,32 +31,23 @@
   }
 }
 
-.button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: white;
-  border: 3px solid black;
-  margin: 0 auto;
-}
-
 .single {
-  animation: button-flash 1 0.5s linear;
+  animation: logo-resize 1 0.5s linear;
 }
 
 .double {
-  animation: button-flash 2 0.5s linear;
+  animation: logo-resize 2 0.5s linear;
 }
 
 .long {
-  animation: button-flash 1 3s ease-out;
+  animation: logo-resize 1 2s linear;
 }
 
-@keyframes button-flash {
+@keyframes logo-resize {
   from {
-    background-color: white;
+    transform: scale(1) rotate(0deg);
   }
   to {
-    background-color: yellow;
+    transform: scale(1.5) rotate(360deg);
   }
 }
