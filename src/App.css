@@ -23,6 +23,40 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 3px solid black;
+  margin: 0 auto;
+}
+
+.single {
+  animation: button-flash 1 0.5s linear;
+}
+
+.double {
+  animation: button-flash 2 0.5s linear;
+}
+
+.long {
+  animation: button-flash 1 3s ease-out;
+}
+
+@keyframes button-flash {
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: yellow;
+  }
 }

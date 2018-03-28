@@ -11,12 +11,18 @@ class App extends Component {
   ).toString()}`;
   lambdaEndpoint = 'https://d3m6o6uj50.execute-api.us-east-1.amazonaws.com/dev/iot/keys';
   state = {
-    clickType: '',
-    clientId: ''
+    action: '',
+    clientId: '',
+    className: ''
   };
 
   componentDidMount() {
     this.getKeys();
+    document.addEventListener('animationend', e => {
+      this.setState({
+        className: ''
+      });
+    });
   }
 
   getKeys = () => {
@@ -41,7 +47,7 @@ class App extends Component {
     let client;
     const decoder = new TextDecoder('utf-8');
     // TODO this should be set in config and/or per environment
-    const iotTopic = '/myIotButton/clickType';
+    const iotTopic = '/myIotButton/action';
     this.IoT = {
       connect: (
         topic,
@@ -80,10 +86,35 @@ class App extends Component {
       client.subscribe(iotTopic);
     };
 
+    const actions = {
+      SINGLE_CLICK: ({ clientId }) => {
+        this.setState({
+          className: 'single',
+          clientId
+        });
+      },
+      DOUBLE_CLICK: ({ clientId }) => {
+        this.setState({
+          className: 'double',
+          clientId
+        });
+      },
+      LONG_CLICK: ({ clientId }) => {
+        this.setState({
+          className: 'long',
+          clientId
+        });
+      }
+    };
+
     const onMessage = (topic, data) => {
-      const { clickType, clientId } = JSON.parse(decoder.decode(data));
-      console.log(clickType, clientId);
-      this.setState({ clickType, clientId });
+      const { action, ...args } = JSON.parse(decoder.decode(data));
+      console.log(action, args);
+      if (action && actions[action]) {
+        actions[action](args);
+      }
+      console.log(action, args.clientId);
+      this.setState({ action, clientId: args.clientId });
     };
 
     const onError = () => {};
@@ -113,7 +144,8 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <p>{this.state.clickType}</p>
+        <div className={`button ${this.state.className}`} />
+        <p>{this.state.action}</p>
         <p>{this.state.clientId}</p>
       </div>
     );

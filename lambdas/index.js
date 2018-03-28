@@ -10,7 +10,7 @@ exports.handler = (event, context, callback) => {
     const iotEndpoint = data.endpointAddress;
 
     const clientId = 'iot-button-lambda';
-    const iotTopic = '/myIotButton/clickType';
+    const iotTopic = '/myIotButton/action';
 
     const iotdata = new AWS.IotData({
       endpoint: iotEndpoint
@@ -18,7 +18,7 @@ exports.handler = (event, context, callback) => {
     const params = {
       topic: iotTopic,
       payload: JSON.stringify({
-        clickType: `${event.clickType}_CLICK`,
+        action: `${event.clickType}_CLICK`,
         clientId: clientId
       }),
       qos: 0
